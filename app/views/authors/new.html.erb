@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+
+  form div {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="date"] {
+    padding: 8px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+    h1 {
+    margin-bottom: 20px;
+  }
+</style>
+
+</head>
+<body>
+    
+  <h1>
+    Add Author
+  </h1>
+    <%= form_with scope: :author,  url: "/authors/create", local: true, method: :post, data: { turbo: true } do |f| %>
+    <div>
+        <%=f.label :first_name, "first_name"%>
+    <%= f.text_field  :first_name%>
+    </div>
+    <div>
+        <%=f.label :last_name, "last_name"%>
+    <%= f.text_field  :last_name%>
+    </div>
+
+    <div>
+       <%=f.label :date_of_birth, "date_of_birth"%>
+     <%= f.date_field :date_of_birth %>
+    </div>
+
+    <%=f.submit "Submit", disable_with: 'Submiting...'%>
+    <%end%>
+</body>
+</html>
