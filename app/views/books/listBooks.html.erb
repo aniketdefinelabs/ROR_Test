@@ -1,65 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Authors List</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Books List</title>
   <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+      padding: 40px;
+      color: #333;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    .add-author-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 16px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .add-author-button:hover {
+      background-color: #0056b3;
+    }
+
     table {
       border-collapse: collapse;
       width: 100%;
-      margin-top: 20px;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 6px;
+      overflow: hidden;
     }
+
     th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
+      padding: 14px;
       text-align: left;
+      border-bottom: 1px solid #ddd;
     }
+
     th {
-      background-color: #f2f2f2;
+      background-color: #f8f9fa;
+      font-weight: bold;
     }
-    .action-buttons a,
-    .action-buttons form {
-      display: inline-block;
-      margin-right: 5px;
+
+    td ul {
+      margin: 0;
+      padding-left: 20px;
     }
-    .action-buttons input[type="submit"] {
-      background-color: red;
-      color: white;
-      border: none;
-      padding: 4px 8px;
-      cursor: pointer;
-    }
-    .action-buttons a {
-      background-color: blue;
-      color: white;
-      padding: 4px 8px;
-      text-decoration: none;
-    }
+
+    .action-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.action-buttons a,
+.action-buttons form {
+  margin: 0; /* Remove default spacing */
+}
+
+.action-buttons a {
+  background-color: #17a2b8;
+  color: white;
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+
+
+.action-buttons input[type="submit"] {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.action-buttons input[type="submit"]:hover {
+  background-color: #c82333;
+}
+
   </style>
 </head>
 <body>
   <h1>Books List</h1>
-   <div style="margin-bottom: 15px;">
+  <div>
     <%= link_to "Add Book", "/books/newBook", class: "add-author-button" %>
   </div>
+
   <table>
     <tr>
       <th>Book Name</th>
       <th>Authors Name</th>
-   
       <th>Actions</th>
     </tr>
     <% @books.each do |book| %>
       <tr>
         <td><%= book.book_title %></td>
-        
         <td>
           <% if book.authors.any? %>
             <ul>
               <% book.authors.each do |author| %>
-                <li><%= author.first_name %> <%= author.last_name %> </li>
-               
+                <li><%= author.first_name %> <%= author.last_name %></li>
               <% end %>
             </ul>
           <% else %>
@@ -67,8 +121,8 @@
           <% end %>
         </td>
         <td class="action-buttons">
-          <%= link_to "Edit" , "/books/editBook/#{book.id}"  %>
-          <%= button_to "Delete", "/books/deleteBook/#{book.id}",  method: :delete, data: { confirm: "Are you sure?" } %>
+          <%= link_to "Edit", "/books/editBook/#{book.id}" %>
+          <%= button_to "Delete", "/books/deleteBook/#{book.id}", method: :delete, data: { confirm: "Are you sure?" } %>
         </td>
       </tr>
     <% end %>

@@ -1,117 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-  body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add New Book</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+      padding: 40px;
+      color: #333;
+    }
 
-  h1 {
-    margin-bottom: 20px;
-  }
+    h1 {
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
 
-  form > div {
-    margin-bottom: 15px;
-  }
+    form {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+    }
 
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+    form > div {
+      margin-bottom: 20px;
+    }
 
-  input[type="text"],
-  select,
-  .dropdown button {
-    width: 300px;
-    padding: 8px;
-    font-size: 14px;
-  }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
 
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
+    input[type="text"] {
+      padding: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
 
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 300px;
-    border: 1px solid #ccc;
-    z-index: 1;
-    padding: 10px;
-  }
-
+    .submit-button {
+      padding: 12px 20px;
+      background-color: #2d89ef;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+    }
 
 
-  .form-check {
-    margin-bottom: 5px;
-  }
+    .add-author-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      background-color: #28a745;
+      color: white;
+      padding: 10px 16px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
 
-  .form-check-input {
-    margin-right: 8px;
-  }
+   
 
-  input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #2d89ef;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
 
-  input[type="submit"]:hover {
-    background-color: #1b5fbf;
-  }
-</style>
+    .dropdown-toggle {
+      padding: 10px 14px;
+      font-size: 14px;
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
+    .dropdown-menu {
+      list-style: none;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-check {
+      margin-bottom: 8px;
+    }
+
+    .form-check-input {
+      margin-right: 8px;
+    }
+  </style>
 </head>
 <body>
-    <h1>
-        Add New Book
-    </h1>
 
-    <%= form_with scope: :book,  url: "/books/create", local: true, method: :post, data: { turbo: true } do |f| %>
-     <div>
-        <%=f.label :book_title, "book_title"%>
-    <%= f.text_field  :book_title%>
+  <%= link_to "Add Author", "/authors/new", class: "add-author-button" %>
+
+  <h1>Add New Book</h1>
+
+  <%= form_with scope: :book, url: "/books/create", local: true, method: :post, data: { turbo: true } do |f| %>
+    <div>
+      <%= f.label :book_title, "Book Title" %>
+      <%= f.text_field :book_title %>
     </div>
 
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-    Select Authors
-  </button>
-  <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
-    <% @authors.each do |author| %>
-      <li class="dropdown-item">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="book[author_ids][]" value="<%= author.id %>" id="author_<%= author.id %>">
-          <label class="form-check-label" for="author_<%= author.id %>">
-            <%= author.first_name %> <%= author.last_name %>
-          </label>
-        </div>
-      </li>
-    <% end %>
-  </ul>
-</div>
+    <div class="dropdown">
+      <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Select Authors
+      </button>
+      <ul class="dropdown-menu">
+        <% @authors.each do |author| %>
+          <li class="dropdown-item">
+            <div class="form-check">
+              <input class="form-check-input"
+                     type="checkbox"
+                     name="book[author_ids][]"
+                     value="<%= author.id %>"
+                     id="author_<%= author.id %>">
+              <label class="form-check-label" for="author_<%= author.id %>">
+                <%= author.first_name %> <%= author.last_name %>
+              </label>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
 
-
-
-
-
-
-
-
-
-  <%= f.submit "Submit" %>
-
-    <%end%>
-
+    <%= f.submit "Submit", class: "submit-button", disable_with: 'Submitting...' %>
+  <% end %>
 
 </body>
 </html>

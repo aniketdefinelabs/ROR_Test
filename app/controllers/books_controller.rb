@@ -38,7 +38,11 @@ class BooksController < ApplicationController
 
 
   def books
-    book = Book.find(params[:id])
-    render json: book.to_json(include: :authors)
+    book = Book.find_by(id: params[:id])
+    if book
+      render json: book.to_json(include: :authors)
+    else
+      render json: { error: "Book not found" }
+    end
   end
 end

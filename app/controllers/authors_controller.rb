@@ -38,7 +38,11 @@ end
   end
 
   def authors
-    author = Author.find(params[:id])
-    render json: author.to_json(include: :books)
+    author = Author.find_by(id: params[:id])
+    if author
+      render json: author.to_json(include: :books)
+    else
+      render json: { error: "Author not found" }
+    end
   end
 end
